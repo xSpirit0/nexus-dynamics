@@ -1,323 +1,178 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
-  min-height: 100vh;
-  font-family: Consolas, "Courier New", monospace;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.13), transparent 30%),
-    radial-gradient(circle at 80% 70%, rgba(255, 0, 90, 0.12), transparent 35%),
-    linear-gradient(135deg, #010409, #03131f 55%, #010409);
+  font-family: monospace;
+  background: #02070d;
   color: #57f4ff;
   overflow-x: hidden;
 }
 
-/* animated grid */
+/* GRID */
 .grid {
   position: fixed;
-  inset: 0;
+  width: 100%;
+  height: 100%;
   background-image:
-    linear-gradient(rgba(87, 244, 255, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(87, 244, 255, 0.09) 1px, transparent 1px);
-  background-size: 45px 45px;
-  animation: gridMove 18s linear infinite;
-  z-index: -3;
-}
-
-@keyframes gridMove {
-  from { background-position: 0 0; }
-  to { background-position: 90px 90px; }
-}
-
-/* scanline overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.035) 0px,
-    rgba(255,255,255,0.035) 1px,
-    transparent 3px,
-    transparent 6px
-  );
-  z-index: 20;
-}
-
-/* glow blur */
-body::after {
-  content: "";
-  position: fixed;
-  width: 420px;
-  height: 420px;
-  right: 12%;
-  top: 18%;
-  background: rgba(87, 244, 255, 0.12);
-  filter: blur(90px);
-  border-radius: 50%;
+    linear-gradient(rgba(87,244,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(87,244,255,0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
   z-index: -2;
 }
 
-/* boot */
-.boot {
+/* GLITCH OVERLAY */
+.glitch-overlay {
   position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle, rgba(87,244,255,0.12), transparent 35%),
-    #010409;
-  color: #57f4ff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  z-index: 50;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03) 0px,
+    rgba(255,255,255,0.03) 2px,
+    transparent 4px
+  );
+  animation: scan 6s linear infinite;
+  pointer-events: none;
+  z-index: 10;
 }
 
-.boot h1 {
-  letter-spacing: 4px;
-  text-shadow: 0 0 18px #57f4ff;
-  animation: flicker 1.8s infinite;
+@keyframes scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
 }
 
-.boot p {
-  min-height: 120px;
-  width: 430px;
-  padding: 20px;
-  border: 1px solid rgba(87,244,255,0.35);
-  background: rgba(0,0,0,0.55);
-  box-shadow: 0 0 30px rgba(87,244,255,0.18);
-}
-
-/* login layout */
-.container {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 25px;
-}
-
-.card {
-  width: 390px;
-  padding: 30px;
-  border: 1px solid rgba(87,244,255,0.45);
-  border-radius: 18px;
-  background: rgba(1, 11, 18, 0.82);
-  backdrop-filter: blur(14px);
-  box-shadow:
-    0 0 35px rgba(87,244,255,0.22),
-    inset 0 0 25px rgba(87,244,255,0.04);
+/* GLITCH TEXT */
+.glitch {
   position: relative;
+  color: #57f4ff;
+  font-size: 28px;
+  text-shadow: 0 0 10px #57f4ff;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
   overflow: hidden;
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(87,244,255,0.13), transparent);
-  transform: translateX(-100%);
-  animation: shine 4s infinite;
+.glitch::before {
+  color: red;
+  animation: glitchTop 1s infinite;
 }
 
-.card h2 {
-  margin: 0;
-  font-size: 30px;
-  color: #eaffff;
-  text-shadow: 0 0 14px rgba(87,244,255,0.9);
+.glitch::after {
+  color: blue;
+  animation: glitchBottom 1s infinite;
 }
 
-.sub {
-  margin-top: 8px;
-  color: #8eb9c6;
+@keyframes glitchTop {
+  0% { top: -2px; left: 2px; }
+  50% { top: 2px; left: -2px; }
+  100% { top: -2px; left: 2px; }
+}
+
+@keyframes glitchBottom {
+  0% { top: 2px; left: -2px; }
+  50% { top: -2px; left: 2px; }
+  100% { top: 2px; left: -2px; }
+}
+
+/* LOGIN */
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  padding: 30px;
+  width: 320px;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid #57f4ff;
+  box-shadow: 0 0 30px #57f4ff;
 }
 
 .alert {
-  margin: 22px 0;
-  padding: 14px;
-  border-left: 4px solid #ff3366;
-  background: rgba(255, 51, 102, 0.12);
-  color: #ffd9e3;
-  line-height: 1.6;
+  margin: 15px 0;
+  padding: 10px;
+  border-left: 3px solid red;
+  background: rgba(255,0,0,0.1);
 }
 
 input {
   width: 100%;
-  padding: 14px;
-  margin: 9px 0;
-  border-radius: 10px;
-  border: 1px solid rgba(87,244,255,0.35);
-  background: rgba(0, 0, 0, 0.55);
-  color: #eaffff;
-  outline: none;
-  font-size: 14px;
-}
-
-input:focus {
-  border-color: #57f4ff;
-  box-shadow: 0 0 18px rgba(87,244,255,0.32);
+  padding: 10px;
+  margin: 10px 0;
+  background: black;
+  border: 1px solid #57f4ff;
+  color: #57f4ff;
 }
 
 button {
   width: 100%;
-  margin-top: 14px;
-  padding: 14px;
+  padding: 10px;
+  background: #57f4ff;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #57f4ff, #7dffd8);
-  color: #011018;
-  font-weight: 900;
+  font-weight: bold;
   cursor: pointer;
-  letter-spacing: 1px;
-  transition: transform .2s, box-shadow .2s;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(87,244,255,0.55);
+  background: #00c3ff;
 }
 
-#error {
-  color: #ff5c7a;
-  text-shadow: 0 0 12px rgba(255,92,122,0.7);
-  font-weight: bold;
-}
-
-/* dashboard */
+/* DASH */
 .hidden {
-  display: none !important;
-}
-
-#dashboard {
-  min-height: 100vh;
-  padding: 35px;
+  display: none;
 }
 
 .dash {
-  max-width: 1100px;
-  margin: auto;
-  padding: 28px;
-  border: 1px solid rgba(87,244,255,0.35);
-  border-radius: 20px;
-  background: rgba(1, 11, 18, 0.78);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 45px rgba(87,244,255,0.18);
-}
-
-.dash h2 {
-  margin: 0;
-  color: #7dffd8;
-  font-size: 34px;
-  text-shadow: 0 0 18px rgba(125,255,216,0.8);
-}
-
-.dash > p {
-  color: #9cc7d3;
-  margin-bottom: 25px;
+  padding: 40px;
 }
 
 .files {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-top: 25px;
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .file {
-  padding: 22px;
-  border: 1px solid rgba(87,244,255,0.45);
-  border-radius: 14px;
-  background:
-    linear-gradient(145deg, rgba(87,244,255,0.08), rgba(0,0,0,0.35));
+  padding: 15px;
+  border: 1px solid #57f4ff;
   cursor: pointer;
-  transition: transform .2s, background .2s, box-shadow .2s;
-  position: relative;
-}
-
-.file::before {
-  content: "DATABASE FILE";
-  display: block;
-  color: #8eb9c6;
-  font-size: 11px;
-  margin-bottom: 10px;
+  transition: 0.2s;
 }
 
 .file:hover {
-  transform: translateY(-4px);
-  background: rgba(87,244,255,0.15);
-  box-shadow: 0 0 24px rgba(87,244,255,0.25);
+  background: rgba(87,244,255,0.2);
 }
 
 .file.danger {
-  border-color: #ff3366;
-  color: #ff7b9a;
+  border-color: red;
+  color: red;
 }
 
-.file.danger::before {
-  content: "ENCRYPTED FILE";
-  color: #ff9ab0;
-}
-
-.file.danger:hover {
-  background: rgba(255,51,102,0.13);
-  box-shadow: 0 0 24px rgba(255,51,102,0.25);
-}
-
-/* file viewer */
+/* VIEWER */
 #viewer {
-  margin-top: 28px;
-  min-height: 280px;
-  padding: 24px;
-  border: 1px solid rgba(87,244,255,0.42);
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.62);
-  color: #dfffff;
-  line-height: 1.65;
-  box-shadow: inset 0 0 22px rgba(87,244,255,0.08);
-  white-space: normal;
-  position: relative;
+  margin-top: 30px;
+  border: 1px solid #57f4ff;
+  padding: 20px;
+  min-height: 150px;
+  background: rgba(0,0,0,0.7);
 }
 
-#viewer::before {
-  content: "NEXUS FILE VIEWER";
-  position: absolute;
-  top: -13px;
-  left: 20px;
-  padding: 4px 10px;
-  background: #03131f;
-  color: #57f4ff;
-  border: 1px solid rgba(87,244,255,0.45);
-  border-radius: 999px;
-  font-size: 11px;
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  40%, 100% { transform: translateX(100%); }
+/* RANDOM GLITCH SHAKE */
+.glitch-viewer {
+  animation: flicker 3s infinite;
 }
 
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  45% { opacity: .75; }
-  48% { opacity: 1; }
-  52% { opacity: .45; }
-  56% { opacity: 1; }
-}
-
-@media (max-width: 800px) {
-  .files {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    width: 100%;
-    max-width: 390px;
-  }
-
-  .boot p {
-    width: 90vw;
-  }
+  0% { opacity: 1; }
+  92% { opacity: 1; }
+  94% { opacity: 0.4; }
+  96% { opacity: 1; }
+  98% { opacity: 0.2; }
+  100% { opacity: 1; }
 }
