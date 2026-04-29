@@ -9,18 +9,12 @@ function login() {
   if (id === correctId && pass === correctPass) {
     error.textContent = "";
 
-    // glitch transition effect
-    document.body.style.animation = "flicker 0.3s 3";
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
 
-    setTimeout(() => {
-      document.getElementById("loginBox").classList.add("hidden");
-      document.getElementById("dashboard").classList.remove("hidden");
-      setViewer("> access granted\n> loading corrupted archive...");
-    }, 400);
-
+    setViewer("> access granted\n> loading corrupted archive...");
   } else {
     error.textContent = "ACCESS DENIED // SYSTEM-7 ALERT";
-    document.body.style.animation = "flicker 0.2s 2";
   }
 }
 
@@ -69,8 +63,8 @@ Use this code on Level 1 exit keypad.`);
 }
 
 function setViewer(text) {
-  const viewer = document.getElementById("viewer");
-  viewer.innerHTML = text.replace(/\n/g, "<br>");
+  document.getElementById("viewer").innerHTML =
+    text.replace(/\n/g, "<br>");
 }
 
 function glitchReveal(finalText) {
