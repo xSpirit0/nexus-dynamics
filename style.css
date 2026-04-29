@@ -6,7 +6,6 @@ body {
   overflow-x: hidden;
 }
 
-/* GRID */
 .grid {
   position: fixed;
   width: 100%;
@@ -18,7 +17,6 @@ body {
   z-index: -2;
 }
 
-/* GLITCH OVERLAY */
 .glitch-overlay {
   position: fixed;
   width: 100%;
@@ -39,49 +37,31 @@ body {
   100% { transform: translateY(100%); }
 }
 
-/* GLITCH TEXT */
+/* CLEAN TITLE TEXT — NO RGB */
 .glitch {
   position: relative;
-  color: #57f4ff;
-  font-size: 28px;
-  text-shadow: 0 0 10px #57f4ff;
-}
-
-.glitch {
   color: #7dffd8;
-  text-shadow:
-    0 0 6px rgba(125,255,216,0.6),
-    0 0 14px rgba(87,244,255,0.6),
-    0 0 25px rgba(87,244,255,0.4);
+  font-size: 28px;
   letter-spacing: 2px;
+  text-shadow:
+    0 0 8px rgba(125,255,216,0.8),
+    0 0 18px rgba(87,244,255,0.45);
+  animation: subtleFlicker 4s infinite;
 }
 
-/* subtle flicker instead of RGB glitch */
-.glitch {
-  animation: subtleFlicker 3s infinite;
+.glitch::before,
+.glitch::after {
+  content: none !important;
+  display: none !important;
 }
 
 @keyframes subtleFlicker {
   0%, 100% { opacity: 1; }
-  96% { opacity: 0.85; }
   97% { opacity: 1; }
-  98% { opacity: 0.7; }
+  98% { opacity: 0.82; }
   99% { opacity: 1; }
 }
 
-@keyframes glitchTop {
-  0% { top: -2px; left: 2px; }
-  50% { top: 2px; left: -2px; }
-  100% { top: -2px; left: 2px; }
-}
-
-@keyframes glitchBottom {
-  0% { top: 2px; left: -2px; }
-  50% { top: -2px; left: 2px; }
-  100% { top: 2px; left: -2px; }
-}
-
-/* LOGIN */
 .container {
   height: 100vh;
   display: flex;
@@ -94,7 +74,7 @@ body {
   width: 320px;
   background: rgba(0,0,0,0.85);
   border: 1px solid #57f4ff;
-  box-shadow: 0 0 30px #57f4ff;
+  box-shadow: 0 0 30px rgba(87,244,255,0.75);
 }
 
 .alert {
@@ -126,7 +106,6 @@ button:hover {
   background: #00c3ff;
 }
 
-/* DASH */
 .hidden {
   display: none;
 }
@@ -157,7 +136,6 @@ button:hover {
   color: red;
 }
 
-/* VIEWER */
 #viewer {
   margin-top: 30px;
   border: 1px solid #57f4ff;
@@ -166,7 +144,6 @@ button:hover {
   background: rgba(0,0,0,0.7);
 }
 
-/* RANDOM GLITCH SHAKE */
 .glitch-viewer {
   animation: flicker 3s infinite;
 }
