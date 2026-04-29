@@ -10,8 +10,24 @@
 <div class="grid"></div>
 <div class="glitch-overlay"></div>
 
+<!-- WORDLE GATE -->
+<div class="container" id="wordGate">
+  <div class="card">
+    <h1 class="title">NEXUS WORD CHECK</h1>
+    <p class="sub">Guess the 6-letter system keyword</p>
+
+    <div id="wordBoard"></div>
+
+    <input type="text" id="guessInput" maxlength="6" placeholder="Enter 6-letter word">
+    <button onclick="submitGuess()">SUBMIT WORD</button>
+
+    <p class="hint">Hint: the answer controls everything.</p>
+    <p id="wordError"></p>
+  </div>
+</div>
+
 <!-- LOGIN -->
-<div class="container" id="loginBox">
+<div class="container hidden" id="loginBox">
   <div class="card">
     <h1 class="title">NEXUS DYNAMICS</h1>
     <p class="sub">Corrupted Internal Access Node</p>
