@@ -19,7 +19,9 @@
     <div id="wordBoard"></div>
 
     <input type="text" id="guessInput" maxlength="6" placeholder="Enter 6-letter word">
-    <button onclick="submitGuess()">SUBMIT WORD</button>
+    <button id="submitWordBtn" onclick="submitGuess()">SUBMIT WORD</button>
+
+    <button id="nextBtn" class="hidden success-btn" onclick="goToLogin()">NEXT</button>
 
     <p class="hint">Hint: the answer controls everything.</p>
     <p id="wordError"></p>
@@ -49,7 +51,6 @@
 <!-- DASHBOARD -->
 <div id="dashboard" class="hidden">
   <div class="dash">
-
     <h2 class="title">ACCESS GRANTED</h2>
     <p>Recovered Nexus Archive (Partial)</p>
 
@@ -62,7 +63,6 @@
     <div id="viewer" class="glitch-viewer">
       <p>> waiting for input...</p>
     </div>
-
   </div>
 </div>
 
