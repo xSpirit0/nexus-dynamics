@@ -1,33 +1,6 @@
 const correctId = "0731";
 const correctPass = "ORION";
 
-const bootLines = [
-  "Loading Nexus kernel...",
-  "Connecting to SYSTEM-7...",
-  "Verifying encrypted gateway...",
-  "Scanning employee database...",
-  "Secure portal ready."
-];
-
-let bootIndex = 0;
-let typingTimer = null;
-
-const bootText = document.getElementById("bootText");
-
-function bootSequence() {
-  if (bootIndex < bootLines.length) {
-    bootText.innerHTML += bootLines[bootIndex] + "<br>";
-    bootIndex++;
-    setTimeout(bootSequence, 650);
-  } else {
-    setTimeout(() => {
-      document.getElementById("bootScreen").style.display = "none";
-    }, 700);
-  }
-}
-
-bootSequence();
-
 function login() {
   const id = document.getElementById("id").value.trim();
   const pass = document.getElementById("pass").value.trim().toUpperCase();
@@ -35,11 +8,19 @@ function login() {
 
   if (id === correctId && pass === correctPass) {
     error.textContent = "";
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-    typeViewer("ACCESS GRANTED...\nLoading Nexus Archive...");
+
+    // glitch transition effect
+    document.body.style.animation = "flicker 0.3s 3";
+
+    setTimeout(() => {
+      document.getElementById("loginBox").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+      setViewer("> access granted\n> loading corrupted archive...");
+    }, 400);
+
   } else {
-    error.textContent = "ACCESS DENIED // INVALID CREDENTIALS";
+    error.textContent = "ACCESS DENIED // SYSTEM-7 ALERT";
+    document.body.style.animation = "flicker 0.2s 2";
   }
 }
 
@@ -50,60 +31,69 @@ function openFile(file) {
     text = `FILE: staff_registry.log
 
 EMPLOYEE: Dr. Elias Voss
-STATUS: Missing
-LAST KNOWN LOCATION: Level 1 Archive Room
+STATUS: MISSING
+LAST LOCATION: LEVEL 1 ARCHIVE
 
 NOTE:
-Employee ID fragments were printed before the lockdown.`;
+Employee ID fragments were printed before shutdown.`;
   }
 
   if (file === 2) {
     text = `FILE: security_memo.txt
 
 SYSTEM NOTICE:
-All Level 1 override codes were removed from local terminals.
+Override codes removed from terminals.
 
-Only encrypted vault files may contain emergency access data.
+Only encrypted vault file contains emergency access.
 
-WARNING:
-SYSTEM-7 detected abnormal activity before shutdown.`;
+SYSTEM-7 LOG:
+Unusual behavior detected before failure.`;
   }
 
   if (file === 3) {
-    text = `FILE: vault_override.enc
+    glitchReveal(`FILE: vault_override.enc
 
-Decrypting archive...
-Integrity check complete.
+DECRYPTING...
+
+██████████████ 100%
 
 VAULT OVERRIDE CODE:
 4927
 
 MESSAGE:
-Use this code on the Level 1 exit keypad.`;
+Use this code on Level 1 exit keypad.`);
+    return;
   }
 
-  typeViewer(text);
+  setViewer(text);
 }
 
-function typeViewer(text) {
+function setViewer(text) {
+  const viewer = document.getElementById("viewer");
+  viewer.innerHTML = text.replace(/\n/g, "<br>");
+}
+
+function glitchReveal(finalText) {
   const viewer = document.getElementById("viewer");
 
-  if (typingTimer) {
-    clearInterval(typingTimer);
-    typingTimer = null;
-  }
+  let chars = "!@#$%^&*ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  let iterations = 0;
 
-  viewer.innerHTML = "";
-  let index = 0;
+  let interval = setInterval(() => {
+    viewer.innerHTML = finalText
+      .split("")
+      .map((letter, index) => {
+        if (index < iterations) return letter;
+        return chars[Math.floor(Math.random() * chars.length)];
+      })
+      .join("")
+      .replace(/\n/g, "<br>");
 
-  typingTimer = setInterval(() => {
-    const char = text.charAt(index);
-    viewer.innerHTML += char === "\n" ? "<br>" : char;
-    index++;
-
-    if (index >= text.length) {
-      clearInterval(typingTimer);
-      typingTimer = null;
+    if (iterations >= finalText.length) {
+      clearInterval(interval);
+      setViewer(finalText);
     }
-  }, 14);
+
+    iterations += 2;
+  }, 30);
 }
