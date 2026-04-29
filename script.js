@@ -28,6 +28,7 @@ function submitGuess() {
 
   if (guess === targetWord) {
     wordSolved = true;
+
     error.style.color = "#7dffd8";
     error.textContent = "KEYWORD ACCEPTED // PRESS NEXT";
 
@@ -44,7 +45,6 @@ function addGuessRow(guess) {
   const targetLetters = targetWord.split("");
   const result = Array(6).fill("wrong");
 
-  // First: exact correct letters
   for (let i = 0; i < 6; i++) {
     if (guess[i] === targetLetters[i]) {
       result[i] = "correct";
@@ -52,7 +52,6 @@ function addGuessRow(guess) {
     }
   }
 
-  // Second: yellow letters only if target still has that letter left
   for (let i = 0; i < 6; i++) {
     if (result[i] === "correct") continue;
 
