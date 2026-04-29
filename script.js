@@ -2,28 +2,38 @@ const targetWord = "SYSTEM";
 const correctId = "0731";
 const correctPass = "ORION";
 
+let wordSolved = false;
+
 function submitGuess() {
   const input = document.getElementById("guessInput");
   const error = document.getElementById("wordError");
   const guess = input.value.trim().toUpperCase();
 
+  error.style.color = "red";
   error.textContent = "";
+
+  if (wordSolved) return;
 
   if (guess.length !== 6) {
     error.textContent = "WORD MUST BE 6 LETTERS";
     return;
   }
 
+  if (!/^[A-Z]+$/.test(guess)) {
+    error.textContent = "LETTERS ONLY";
+    return;
+  }
+
   addGuessRow(guess);
 
   if (guess === targetWord) {
+    wordSolved = true;
     error.style.color = "#7dffd8";
-    error.textContent = "KEYWORD ACCEPTED // REDIRECTING...";
+    error.textContent = "KEYWORD ACCEPTED // PRESS NEXT";
 
-    setTimeout(() => {
-      document.getElementById("wordGate").classList.add("hidden");
-      document.getElementById("loginBox").classList.remove("hidden");
-    }, 900);
+    input.disabled = true;
+    document.getElementById("submitWordBtn").disabled = true;
+    document.getElementById("nextBtn").classList.remove("hidden");
   }
 
   input.value = "";
@@ -31,22 +41,40 @@ function submitGuess() {
 
 function addGuessRow(guess) {
   const board = document.getElementById("wordBoard");
+  const targetLetters = targetWord.split("");
+  const result = Array(6).fill("wrong");
+
+  // First: exact correct letters
+  for (let i = 0; i < 6; i++) {
+    if (guess[i] === targetLetters[i]) {
+      result[i] = "correct";
+      targetLetters[i] = null;
+    }
+  }
+
+  // Second: yellow letters only if target still has that letter left
+  for (let i = 0; i < 6; i++) {
+    if (result[i] === "correct") continue;
+
+    const foundIndex = targetLetters.indexOf(guess[i]);
+
+    if (foundIndex !== -1) {
+      result[i] = "present";
+      targetLetters[foundIndex] = null;
+    }
+  }
 
   for (let i = 0; i < 6; i++) {
     const tile = document.createElement("div");
-    tile.classList.add("tile");
+    tile.classList.add("tile", result[i]);
     tile.textContent = guess[i];
-
-    if (guess[i] === targetWord[i]) {
-      tile.classList.add("correct");
-    } else if (targetWord.includes(guess[i])) {
-      tile.classList.add("present");
-    } else {
-      tile.classList.add("wrong");
-    }
-
     board.appendChild(tile);
   }
+}
+
+function goToLogin() {
+  document.getElementById("wordGate").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
 }
 
 document.getElementById("guessInput").addEventListener("keydown", function (e) {
