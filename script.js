@@ -9,13 +9,15 @@ const bootLines = [
   "Secure portal ready."
 ];
 
-let i = 0;
+let bootIndex = 0;
+let typingTimer = null;
+
 const bootText = document.getElementById("bootText");
 
 function bootSequence() {
-  if (i < bootLines.length) {
-    bootText.innerHTML += bootLines[i] + "<br>";
-    i++;
+  if (bootIndex < bootLines.length) {
+    bootText.innerHTML += bootLines[bootIndex] + "<br>";
+    bootIndex++;
     setTimeout(bootSequence, 650);
   } else {
     setTimeout(() => {
@@ -32,36 +34,31 @@ function login() {
   const error = document.getElementById("error");
 
   if (id === correctId && pass === correctPass) {
+    error.textContent = "";
     document.getElementById("loginBox").classList.add("hidden");
     document.getElementById("dashboard").classList.remove("hidden");
     typeViewer("ACCESS GRANTED...\nLoading Nexus Archive...");
   } else {
     error.textContent = "ACCESS DENIED // INVALID CREDENTIALS";
-    document.body.classList.add("shake");
-
-    setTimeout(() => {
-      document.body.classList.remove("shake");
-    }, 400);
   }
 }
 
 function openFile(file) {
+  let text = "";
+
   if (file === 1) {
-    typeViewer(
-`FILE: staff_registry.log
+    text = `FILE: staff_registry.log
 
 EMPLOYEE: Dr. Elias Voss
 STATUS: Missing
 LAST KNOWN LOCATION: Level 1 Archive Room
 
 NOTE:
-Employee ID fragments were printed before the lockdown.`
-    );
+Employee ID fragments were printed before the lockdown.`;
   }
 
   if (file === 2) {
-    typeViewer(
-`FILE: security_memo.txt
+    text = `FILE: security_memo.txt
 
 SYSTEM NOTICE:
 All Level 1 override codes were removed from local terminals.
@@ -69,37 +66,44 @@ All Level 1 override codes were removed from local terminals.
 Only encrypted vault files may contain emergency access data.
 
 WARNING:
-SYSTEM-7 detected abnormal activity before shutdown.`
-    );
+SYSTEM-7 detected abnormal activity before shutdown.`;
   }
 
   if (file === 3) {
-    typeViewer(
-`FILE: vault_override.enc
+    text = `FILE: vault_override.enc
 
-Decrypting...
-████████████████ 100%
+Decrypting archive...
+Integrity check complete.
 
 VAULT OVERRIDE CODE:
 4927
 
 MESSAGE:
-Use this code on the Level 1 exit keypad.`
-    );
+Use this code on the Level 1 exit keypad.`;
   }
+
+  typeViewer(text);
 }
 
 function typeViewer(text) {
   const viewer = document.getElementById("viewer");
+
+  if (typingTimer) {
+    clearInterval(typingTimer);
+    typingTimer = null;
+  }
+
   viewer.innerHTML = "";
   let index = 0;
 
-  const interval = setInterval(() => {
-    viewer.innerHTML += text.charAt(index) === "\n" ? "<br>" : text.charAt(index);
+  typingTimer = setInterval(() => {
+    const char = text.charAt(index);
+    viewer.innerHTML += char === "\n" ? "<br>" : char;
     index++;
 
     if (index >= text.length) {
-      clearInterval(interval);
+      clearInterval(typingTimer);
+      typingTimer = null;
     }
-  }, 18);
+  }, 14);
 }
