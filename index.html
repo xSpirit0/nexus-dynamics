@@ -1,92 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nexus Dynamics Internal Database</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Nexus Dynamics | Secure Portal</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background-grid"></div>
 
-  <main class="site-shell">
-    <section id="loginScreen" class="panel login-panel">
-      <div class="brand-row">
-        <div class="logo-mark">NX</div>
-        <div>
-          <h1>Nexus Dynamics</h1>
-          <p>Internal Employee Database</p>
-        </div>
-      </div>
+<div class="grid"></div>
 
-      <div class="warning-box">
-        AUTHORIZED PERSONNEL ONLY<br />
-        All access attempts are monitored by SYSTEM-7.
-      </div>
+<!-- Boot Screen -->
+<div id="bootScreen" class="boot">
+  <h1>NX SYSTEM INITIALIZING...</h1>
+  <p id="bootText"></p>
+</div>
 
-      <form id="loginForm" class="login-form">
-        <label for="employeeId">Employee ID</label>
-        <input id="employeeId" type="text" autocomplete="off" placeholder="Example: 0731" />
+<!-- Login -->
+<div class="container" id="loginBox">
+  <div class="card">
+    <h2>Nexus Dynamics</h2>
+    <p class="sub">Internal Employee Database</p>
 
-        <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="off" placeholder="Enter password" />
+    <div class="alert">
+      AUTHORIZED PERSONNEL ONLY<br>
+      SYSTEM-7 MONITORING ACTIVE
+    </div>
 
-        <button type="submit">Access Database</button>
-      </form>
+    <input type="text" id="id" placeholder="Employee ID">
+    <input type="password" id="pass" placeholder="Password">
 
-      <p id="loginMessage" class="login-message"></p>
+    <button onclick="login()">Access Database</button>
 
-      <div class="hint-text">
-        Hint for players: Employee ID and password should be found inside Level 1.
-      </div>
-    </section>
+    <p id="error"></p>
+  </div>
+</div>
 
-    <section id="databaseScreen" class="panel database-panel hidden">
-      <header class="database-header">
-        <div>
-          <h2>Nexus Dynamics Secure Database</h2>
-          <p>Session: Employee 0731 / Clearance: Limited</p>
-        </div>
-        <button id="logoutButton" class="small-button">Log Out</button>
-      </header>
+<!-- Dashboard -->
+<div id="dashboard" class="hidden">
+  <div class="dash">
+    <h2>ACCESS GRANTED</h2>
+    <p>Welcome to Nexus Archive</p>
 
-      <div class="status-bar">
-        <span class="online-dot"></span>
-        SYSTEM-7 MONITORING ACTIVE
-      </div>
+    <div class="files">
+      <div class="file" onclick="openFile(1)">staff_registry.log</div>
+      <div class="file" onclick="openFile(2)">security_memo.txt</div>
+      <div class="file danger" onclick="openFile(3)">vault_override.enc</div>
+    </div>
 
-      <div class="database-grid">
-        <article class="data-card">
-          <h3>Project Archive</h3>
-          <p><strong>Project:</strong> CTRL-ESC</p>
-          <p><strong>Status:</strong> Locked</p>
-          <p><strong>Last Update:</strong> 03:17 AM</p>
-        </article>
+    <div id="viewer">
+      <p>Select a file...</p>
+    </div>
+  </div>
+</div>
 
-        <article class="data-card">
-          <h3>Staff Notice</h3>
-          <p>Do not leave printed credentials near the maintenance corridor.</p>
-          <p>Security team has reported repeated access violations.</p>
-        </article>
-
-        <article class="data-card important-card">
-          <h3>Restricted Door Override</h3>
-          <p>Manual override available for Level 1 emergency exit.</p>
-          <button id="revealButton">Reveal Override Code</button>
-          <div id="secretCode" class="secret-code hidden">
-            <p>LEVEL 1 EXIT CODE</p>
-            <strong>4927</strong>
-          </div>
-        </article>
-
-        <article class="data-card terminal-card">
-          <h3>Terminal Log</h3>
-          <pre id="terminalText"></pre>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
