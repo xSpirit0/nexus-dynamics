@@ -39,7 +39,7 @@ body {
   to { transform: translateY(100%); }
 }
 
-/* CLEAN TITLES */
+/* TITLE */
 .title {
   color: #7dffd8;
   font-size: 28px;
@@ -49,7 +49,7 @@ body {
     0 0 18px rgba(87,244,255,0.4);
 }
 
-/* LOGIN */
+/* CONTAINER */
 .container {
   height: 100vh;
   display: flex;
@@ -57,14 +57,52 @@ body {
   align-items: center;
 }
 
+/* CARD */
 .card {
   padding: 30px;
-  width: 320px;
+  width: 340px;
   background: rgba(0,0,0,0.85);
   border: 1px solid #57f4ff;
   box-shadow: 0 0 30px rgba(87,244,255,0.7);
 }
 
+/* WORDLE BOARD */
+#wordBoard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin: 20px 0;
+}
+
+.tile {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #57f4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  background: rgba(0,0,0,0.6);
+}
+
+/* COLORS */
+.correct {
+  background: #00ff9c;
+  color: black;
+}
+
+.present {
+  background: #ffd166;
+  color: black;
+}
+
+.wrong {
+  background: #333;
+  color: #777;
+}
+
+/* LOGIN */
 .sub {
   color: #8eb9c6;
 }
@@ -98,7 +136,7 @@ button:hover {
   background: #00c3ff;
 }
 
-#error {
+#error, #wordError {
   color: red;
 }
 
@@ -121,7 +159,6 @@ button:hover {
   padding: 15px;
   border: 1px solid #57f4ff;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .file:hover {
@@ -140,16 +177,4 @@ button:hover {
   padding: 20px;
   min-height: 150px;
   background: rgba(0,0,0,0.7);
-}
-
-/* SUBTLE FLICKER ONLY */
-.glitch-viewer {
-  animation: flicker 3s infinite;
-}
-
-@keyframes flicker {
-  0% { opacity: 1; }
-  95% { opacity: 1; }
-  97% { opacity: 0.6; }
-  100% { opacity: 1; }
 }
