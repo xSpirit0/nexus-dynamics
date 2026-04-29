@@ -10,17 +10,22 @@
 <div class="grid"></div>
 <div class="glitch-overlay"></div>
 
-<!-- WORDLE GATE -->
+<!-- ================= WORDLE GATE ================= -->
 <div class="container" id="wordGate">
   <div class="card">
     <h1 class="title">NEXUS WORD CHECK</h1>
     <p class="sub">Guess the 6-letter system keyword</p>
 
+    <!-- Board -->
     <div id="wordBoard"></div>
 
+    <!-- Input -->
     <input type="text" id="guessInput" maxlength="6" placeholder="Enter 6-letter word">
+
+    <!-- Submit -->
     <button id="submitWordBtn" onclick="submitGuess()">SUBMIT WORD</button>
 
+    <!-- NEXT BUTTON (hidden until correct) -->
     <button id="nextBtn" class="hidden success-btn" onclick="goToLogin()">NEXT</button>
 
     <p class="hint">Hint: the answer controls everything.</p>
@@ -28,7 +33,7 @@
   </div>
 </div>
 
-<!-- LOGIN -->
+<!-- ================= LOGIN ================= -->
 <div class="container hidden" id="loginBox">
   <div class="card">
     <h1 class="title">NEXUS DYNAMICS</h1>
@@ -48,9 +53,10 @@
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- ================= DASHBOARD ================= -->
 <div id="dashboard" class="hidden">
   <div class="dash">
+
     <h2 class="title">ACCESS GRANTED</h2>
     <p>Recovered Nexus Archive (Partial)</p>
 
@@ -63,6 +69,7 @@
     <div id="viewer" class="glitch-viewer">
       <p>> waiting for input...</p>
     </div>
+
   </div>
 </div>
 
