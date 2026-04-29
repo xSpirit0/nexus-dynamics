@@ -1,5 +1,59 @@
+const targetWord = "SYSTEM";
 const correctId = "0731";
 const correctPass = "ORION";
+
+function submitGuess() {
+  const input = document.getElementById("guessInput");
+  const error = document.getElementById("wordError");
+  const guess = input.value.trim().toUpperCase();
+
+  error.textContent = "";
+
+  if (guess.length !== 6) {
+    error.textContent = "WORD MUST BE 6 LETTERS";
+    return;
+  }
+
+  addGuessRow(guess);
+
+  if (guess === targetWord) {
+    error.style.color = "#7dffd8";
+    error.textContent = "KEYWORD ACCEPTED // REDIRECTING...";
+
+    setTimeout(() => {
+      document.getElementById("wordGate").classList.add("hidden");
+      document.getElementById("loginBox").classList.remove("hidden");
+    }, 900);
+  }
+
+  input.value = "";
+}
+
+function addGuessRow(guess) {
+  const board = document.getElementById("wordBoard");
+
+  for (let i = 0; i < 6; i++) {
+    const tile = document.createElement("div");
+    tile.classList.add("tile");
+    tile.textContent = guess[i];
+
+    if (guess[i] === targetWord[i]) {
+      tile.classList.add("correct");
+    } else if (targetWord.includes(guess[i])) {
+      tile.classList.add("present");
+    } else {
+      tile.classList.add("wrong");
+    }
+
+    board.appendChild(tile);
+  }
+}
+
+document.getElementById("guessInput").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    submitGuess();
+  }
+});
 
 function login() {
   const id = document.getElementById("id").value.trim();
@@ -69,15 +123,14 @@ function setViewer(text) {
 
 function glitchReveal(finalText) {
   const viewer = document.getElementById("viewer");
-
-  let chars = "!@#$%^&*ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  const chars = "!@#$%^&*ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   let iterations = 0;
 
-  let interval = setInterval(() => {
+  const interval = setInterval(() => {
     viewer.innerHTML = finalText
       .split("")
       .map((letter, index) => {
-        if (index < iterations) return letter;
+        if (index < iterations || letter === "\n" || letter === " ") return letter;
         return chars[Math.floor(Math.random() * chars.length)];
       })
       .join("")
