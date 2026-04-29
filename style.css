@@ -47,23 +47,26 @@ body {
   text-shadow: 0 0 10px #57f4ff;
 }
 
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
+.glitch {
+  color: #7dffd8;
+  text-shadow:
+    0 0 6px rgba(125,255,216,0.6),
+    0 0 14px rgba(87,244,255,0.6),
+    0 0 25px rgba(87,244,255,0.4);
+  letter-spacing: 2px;
 }
 
-.glitch::before {
-  color: red;
-  animation: glitchTop 1s infinite;
+/* subtle flicker instead of RGB glitch */
+.glitch {
+  animation: subtleFlicker 3s infinite;
 }
 
-.glitch::after {
-  color: blue;
-  animation: glitchBottom 1s infinite;
+@keyframes subtleFlicker {
+  0%, 100% { opacity: 1; }
+  96% { opacity: 0.85; }
+  97% { opacity: 1; }
+  98% { opacity: 0.7; }
+  99% { opacity: 1; }
 }
 
 @keyframes glitchTop {
