@@ -1,74 +1,105 @@
-const CORRECT_EMPLOYEE_ID = "0731";
-const CORRECT_PASSWORD = "ORION";
+const correctId = "0731";
+const correctPass = "ORION";
 
-const loginScreen = document.getElementById("loginScreen");
-const databaseScreen = document.getElementById("databaseScreen");
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
-const logoutButton = document.getElementById("logoutButton");
-const revealButton = document.getElementById("revealButton");
-const secretCode = document.getElementById("secretCode");
-const terminalText = document.getElementById("terminalText");
-
-const terminalLines = [
-  "> Initializing secure session...",
-  "> Verifying clearance level...",
-  "> Access granted: limited archive mode.",
-  "> Warning: Level 1 emergency override was accessed recently.",
-  "> Retrieved file: DOOR_OVERRIDE_L1.txt",
-  "> Awaiting user action..."
+const bootLines = [
+  "Loading Nexus kernel...",
+  "Connecting to SYSTEM-7...",
+  "Verifying encrypted gateway...",
+  "Scanning employee database...",
+  "Secure portal ready."
 ];
 
-loginForm.addEventListener("submit", function (event) {
-  event.preventDefault();
+let i = 0;
+const bootText = document.getElementById("bootText");
 
-  const employeeId = document.getElementById("employeeId").value.trim().toUpperCase();
-  const password = document.getElementById("password").value.trim().toUpperCase();
-
-  if (employeeId === CORRECT_EMPLOYEE_ID && password === CORRECT_PASSWORD) {
-    loginMessage.textContent = "";
-    loginScreen.classList.add("hidden");
-    databaseScreen.classList.remove("hidden");
-    typeTerminalLog();
+function bootSequence() {
+  if (i < bootLines.length) {
+    bootText.innerHTML += bootLines[i] + "<br>";
+    i++;
+    setTimeout(bootSequence, 650);
   } else {
-    loginMessage.textContent = "ACCESS DENIED: Invalid employee ID or password.";
+    setTimeout(() => {
+      document.getElementById("bootScreen").style.display = "none";
+    }, 700);
   }
-});
+}
 
-logoutButton.addEventListener("click", function () {
-  databaseScreen.classList.add("hidden");
-  loginScreen.classList.remove("hidden");
-  secretCode.classList.add("hidden");
-  terminalText.textContent = "";
-  loginForm.reset();
-});
+bootSequence();
 
-revealButton.addEventListener("click", function () {
-  secretCode.classList.remove("hidden");
-  revealButton.textContent = "Override Code Revealed";
-});
+function login() {
+  const id = document.getElementById("id").value.trim();
+  const pass = document.getElementById("pass").value.trim().toUpperCase();
+  const error = document.getElementById("error");
 
-function typeTerminalLog() {
-  terminalText.textContent = "";
-  let lineIndex = 0;
-  let charIndex = 0;
+  if (id === correctId && pass === correctPass) {
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    typeViewer("ACCESS GRANTED...\nLoading Nexus Archive...");
+  } else {
+    error.textContent = "ACCESS DENIED // INVALID CREDENTIALS";
+    document.body.classList.add("shake");
 
-  function typeNextCharacter() {
-    if (lineIndex >= terminalLines.length) return;
+    setTimeout(() => {
+      document.body.classList.remove("shake");
+    }, 400);
+  }
+}
 
-    const currentLine = terminalLines[lineIndex];
-    terminalText.textContent += currentLine.charAt(charIndex);
-    charIndex++;
+function openFile(file) {
+  if (file === 1) {
+    typeViewer(
+`FILE: staff_registry.log
 
-    if (charIndex >= currentLine.length) {
-      terminalText.textContent += "\n";
-      lineIndex++;
-      charIndex = 0;
-      setTimeout(typeNextCharacter, 300);
-    } else {
-      setTimeout(typeNextCharacter, 22);
+EMPLOYEE: Dr. Elias Voss
+STATUS: Missing
+LAST KNOWN LOCATION: Level 1 Archive Room
+
+NOTE:
+Employee ID fragments were printed before the lockdown.`
+    );
+  }
+
+  if (file === 2) {
+    typeViewer(
+`FILE: security_memo.txt
+
+SYSTEM NOTICE:
+All Level 1 override codes were removed from local terminals.
+
+Only encrypted vault files may contain emergency access data.
+
+WARNING:
+SYSTEM-7 detected abnormal activity before shutdown.`
+    );
+  }
+
+  if (file === 3) {
+    typeViewer(
+`FILE: vault_override.enc
+
+Decrypting...
+████████████████ 100%
+
+VAULT OVERRIDE CODE:
+4927
+
+MESSAGE:
+Use this code on the Level 1 exit keypad.`
+    );
+  }
+}
+
+function typeViewer(text) {
+  const viewer = document.getElementById("viewer");
+  viewer.innerHTML = "";
+  let index = 0;
+
+  const interval = setInterval(() => {
+    viewer.innerHTML += text.charAt(index) === "\n" ? "<br>" : text.charAt(index);
+    index++;
+
+    if (index >= text.length) {
+      clearInterval(interval);
     }
-  }
-
-  typeNextCharacter();
+  }, 18);
 }
