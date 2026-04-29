@@ -6,7 +6,6 @@ body {
   overflow-x: hidden;
 }
 
-/* GRID */
 .grid {
   position: fixed;
   width: 100%;
@@ -18,7 +17,6 @@ body {
   z-index: -2;
 }
 
-/* SCANLINES */
 .glitch-overlay {
   position: fixed;
   width: 100%;
@@ -39,7 +37,6 @@ body {
   to { transform: translateY(100%); }
 }
 
-/* TITLE */
 .title {
   color: #7dffd8;
   font-size: 28px;
@@ -49,44 +46,44 @@ body {
     0 0 18px rgba(87,244,255,0.4);
 }
 
-/* CONTAINER */
 .container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* CARD */
 .card {
   padding: 30px;
-  width: 340px;
+  width: 370px;
   background: rgba(0,0,0,0.85);
   border: 1px solid #57f4ff;
   box-shadow: 0 0 30px rgba(87,244,255,0.7);
 }
 
-/* WORDLE BOARD */
+.sub, .hint {
+  color: #8eb9c6;
+}
+
 #wordBoard {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
+  gap: 7px;
   margin: 20px 0;
 }
 
 .tile {
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
   border: 1px solid #57f4ff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 18px;
-  background: rgba(0,0,0,0.6);
+  font-size: 20px;
+  background: rgba(0,0,0,0.65);
 }
 
-/* COLORS */
 .correct {
   background: #00ff9c;
   color: black;
@@ -102,11 +99,6 @@ body {
   color: #777;
 }
 
-/* LOGIN */
-.sub {
-  color: #8eb9c6;
-}
-
 .alert {
   margin: 15px 0;
   padding: 10px;
@@ -116,33 +108,43 @@ body {
 
 input {
   width: 100%;
-  padding: 10px;
+  padding: 11px;
   margin: 10px 0;
   background: black;
   border: 1px solid #57f4ff;
   color: #57f4ff;
+  box-sizing: border-box;
 }
 
 button {
   width: 100%;
-  padding: 10px;
+  padding: 11px;
   background: #57f4ff;
   border: none;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 8px;
 }
 
 button:hover {
   background: #00c3ff;
 }
 
+.success-btn {
+  background: #00ff9c;
+  color: black;
+}
+
+.success-btn:hover {
+  background: #7dffd8;
+}
+
 #error, #wordError {
   color: red;
 }
 
-/* DASH */
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .dash {
@@ -170,11 +172,21 @@ button:hover {
   color: red;
 }
 
-/* VIEWER */
 #viewer {
   margin-top: 30px;
   border: 1px solid #57f4ff;
   padding: 20px;
   min-height: 150px;
   background: rgba(0,0,0,0.7);
+}
+
+.glitch-viewer {
+  animation: flicker 3s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  95% { opacity: 1; }
+  97% { opacity: 0.6; }
+  100% { opacity: 1; }
 }
