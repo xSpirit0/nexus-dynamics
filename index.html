@@ -2,44 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nexus Dynamics | Secure Portal</title>
+  <title>Nexus Dynamics | Corrupted Node</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="grid"></div>
+<div class="glitch-overlay"></div>
 
-<!-- Boot Screen -->
-<div id="bootScreen" class="boot">
-  <h1>NX SYSTEM INITIALIZING...</h1>
-  <p id="bootText"></p>
-</div>
-
-<!-- Login -->
+<!-- LOGIN -->
 <div class="container" id="loginBox">
-  <div class="card">
-    <h2>Nexus Dynamics</h2>
-    <p class="sub">Internal Employee Database</p>
+  <div class="card glitch-card">
+    <h1 class="glitch" data-text="NEXUS DYNAMICS">NEXUS DYNAMICS</h1>
+    <p class="sub">Corrupted Internal Access Node</p>
 
     <div class="alert">
-      AUTHORIZED PERSONNEL ONLY<br>
-      SYSTEM-7 MONITORING ACTIVE
+      ⚠ SYSTEM-7 WARNING<br>
+      DATA INTEGRITY COMPROMISED
     </div>
 
     <input type="text" id="id" placeholder="Employee ID">
     <input type="password" id="pass" placeholder="Password">
 
-    <button onclick="login()">Access Database</button>
+    <button onclick="login()">ACCESS SYSTEM</button>
 
     <p id="error"></p>
   </div>
 </div>
 
-<!-- Dashboard -->
+<!-- DASHBOARD -->
 <div id="dashboard" class="hidden">
   <div class="dash">
-    <h2>ACCESS GRANTED</h2>
-    <p>Welcome to Nexus Archive</p>
+
+    <h2 class="glitch" data-text="ACCESS GRANTED">ACCESS GRANTED</h2>
+    <p>Recovered Nexus Archive (Partial)</p>
 
     <div class="files">
       <div class="file" onclick="openFile(1)">staff_registry.log</div>
@@ -47,9 +43,10 @@
       <div class="file danger" onclick="openFile(3)">vault_override.enc</div>
     </div>
 
-    <div id="viewer">
-      <p>Select a file...</p>
+    <div id="viewer" class="glitch-viewer">
+      <p>> waiting for input...</p>
     </div>
+
   </div>
 </div>
 
