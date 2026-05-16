@@ -1,6 +1,6 @@
 const targetWord = "SYSTEM";
-const correctId = "0731";
-const correctPass = "ORION";
+const correctId = "NX-00451";
+const correctPass = "NX-4471";
 
 let wordSolved = false;
 
